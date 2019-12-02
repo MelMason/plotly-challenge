@@ -21,6 +21,7 @@ function buildMetadata(sample) {
 
 
 function buildCharts(sample) {
+   // @TODO: Use `d3.json` to fetch the sample data for the plots
   var url = `/samples/${sample}`;
 
   d3.json(url).then((data) => {
@@ -29,6 +30,8 @@ function buildCharts(sample) {
     var sample_values = data.sample_values;
     var otu_ids = data.otu_ids;
     var otu_labels = data.otu_labels;
+
+    // @TODO: Build a Bubble Chart using the sample data
 
     var trace1 = {
       x: otu_ids,
@@ -49,13 +52,14 @@ function buildCharts(sample) {
 
     Plotly.plot("bubble", bubbleData, layout);
 
+    // @TODO: Build a Pie Chart
     var trace = {
       values: sample_values.slice(0,10),
       labels: otu_ids.slice(0,10),
-      mode: 'markers',
+      mode: "markers",
       marker: {size:10},
       text: otu_labels.slice(0,10),
-      type: 'pie',
+      type: "pie",
       textinfo: "label+percent",
       textposition: "outside",
       automargin: true
@@ -71,17 +75,6 @@ function buildCharts(sample) {
     Plotly.plot("pie", pieData, pieLayout);
   });
 }
-
-// buildCharts(sample);
-
-  // @TODO: Use `d3.json` to fetch the sample data for the plots
-
-    // @TODO: Build a Bubble Chart using the sample data
-
-    // @TODO: Build a Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
-// }
 
 function init() {
   // Grab a reference to the dropdown select element
@@ -102,6 +95,7 @@ function init() {
     buildMetadata(firstSample);
   });
 }
+
 
 function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
